@@ -1,0 +1,33 @@
+tree("Root")
+	parallel
+	//chama sem parar
+		repeat mute tree("Patrol")
+		repeat mute tree("Dead")
+
+//patrulha se a vida for menor que 100
+tree("Patrol")
+	fallback
+		tree("Seguir")
+		while IsHealthLessThan(100.0)
+			fallback
+				tree("Patrulha")
+
+//morte
+tree("Dead")
+	sequence
+		IsHealthLessThan(0.1)
+		Explode
+
+
+//segue se ve o player
+tree("Seguir")
+	while SeePlayer
+		sequence
+			Segue
+			Wait(0.1)
+
+//patrulha pontos aleatorios
+tree("Patrulha")
+	sequence
+		PickRandomDestination
+		MoveToDestination

@@ -1,0 +1,31 @@
+tree("Root")
+	parallel
+		repeat mute tree("Patrol")
+		repeat mute tree("Dead")
+
+tree("Patrol")
+	fallback
+		tree("Run")
+		while IsHealthLessThan(100.0)
+			fallback
+				tree("Patrulha")
+
+tree("Dead")
+	sequence
+		IsHealthLessThan(0.1)
+		Explode
+
+//foge para um ponto especifico e recupera toda a vida
+tree("Run")
+	while IsHealthLessThan(60.0)
+		sequence
+			Fugir
+			Wait(0.1)
+			RecuperaVida
+
+tree("Patrulha")
+	sequence
+		Patrulha01
+		Wait(0.1)
+		Patrulha02
+		Wait(0.1)

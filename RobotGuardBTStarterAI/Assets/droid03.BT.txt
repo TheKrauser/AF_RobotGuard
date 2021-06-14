@@ -1,0 +1,37 @@
+tree("Root")
+	parallel
+	//chama sem parar
+		repeat mute tree("Patrol")
+		repeat mute tree("Dead")
+
+//patrulha se tiver menos de 100 de vida
+tree("Patrol")
+	fallback
+		tree("Attack")
+		while IsHealthLessThan(100.0)
+			fallback
+				tree("Patrulha")
+
+//morte
+tree("Dead")
+	sequence
+		IsHealthLessThan(0.1)
+		Explode
+
+
+//se ve o player olha para ele e atira
+tree("Attack")
+	while SeePlayer
+		sequence
+			TargetPlayer
+			LookAtTarget
+			Wait(0.1)
+			Fire
+
+//patrulha pontos especificos
+tree("Patrulha")
+	sequence
+		Patrulha01
+		Wait(0.1)
+		Patrulha02
+		Wait(0.1)
